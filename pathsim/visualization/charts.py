@@ -26,10 +26,10 @@ def save_score_histogram(
     """
     import matplotlib
     matplotlib.use("Agg")  # non-interactive backend; safe on all platforms
-    import matplotlib.pyplot as plt
     import matplotlib.patches as mpatches
+    import matplotlib.pyplot as plt
 
-    from pathsim.simulation.outcome_model import SUCCESS_THRESHOLD, FAILURE_THRESHOLD
+    from pathsim.simulation.outcome_model import FAILURE_THRESHOLD, SUCCESS_THRESHOLD
 
     arr = np.asarray(scores, dtype=np.float64)
 
@@ -74,7 +74,7 @@ def save_score_histogram(
     success_patch = mpatches.Patch(color="#2ea043", label="Success")
     moderate_patch = mpatches.Patch(color="#e3b341", label="Moderate")
     failure_patch = mpatches.Patch(color="#f85149", label="Failure")
-    legend = ax.legend(
+    ax.legend(
         handles=[success_patch, moderate_patch, failure_patch],
         loc="upper right",
         facecolor="#161b22",

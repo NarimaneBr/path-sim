@@ -11,16 +11,14 @@ from __future__ import annotations
 
 import argparse
 import sys
-import time
 from pathlib import Path
 
+from rich import box
 from rich.console import Console
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn, TimeElapsedColumn
-from rich.table import Table
-from rich import box
-from rich.text import Text
 from rich.rule import Rule
+from rich.table import Table
 
 from pathsim import __version__
 from pathsim.models import SimulationConfig, SimulationResult
@@ -273,7 +271,7 @@ def main(argv: list[str] | None = None) -> int:
         console=console,
         transient=True,
     ) as progress:
-        task = progress.add_task(
+        progress.add_task(
             f"  Running {config.runs:,} simulations…", total=None
         )
         try:

@@ -8,10 +8,10 @@ through this module; they should not call the sub-modules directly.
 
 from __future__ import annotations
 
+from pathsim.analysis.sensitivity import compute_sensitivity
 from pathsim.models import SimulationConfig, SimulationResult
 from pathsim.simulation.monte_carlo import run_simulation
 from pathsim.simulation.outcome_model import compute_outcome_distribution
-from pathsim.analysis.sensitivity import compute_sensitivity
 
 # ---------------------------------------------------------------------------
 # Scenario registry
@@ -50,11 +50,11 @@ def _resolve_scenario(decision: str):
     Tries exact match first, then substring match.  Raises ValueError
     if the decision cannot be mapped to any known scenario.
     """
-    from pathsim.scenarios.startup import StartupScenario
     from pathsim.scenarios.career_change import CareerChangeScenario
     from pathsim.scenarios.investment import InvestmentScenario
+    from pathsim.scenarios.startup import StartupScenario
 
-    _SCENARIO_CLASSES = {
+    scenario_classes = {
         "startup": StartupScenario,
         "career-change": CareerChangeScenario,
         "investment": InvestmentScenario,
@@ -64,12 +64,12 @@ def _resolve_scenario(decision: str):
 
     # Exact match
     if key in _SCENARIO_ALIASES:
-        return _SCENARIO_CLASSES[_SCENARIO_ALIASES[key]]()
+        return scenario_classes[_SCENARIO_ALIASES[key]]()
 
     # Substring match — picks first alias that appears in the decision string
     for alias, canonical in _SCENARIO_ALIASES.items():
         if alias in key:
-            return _SCENARIO_CLASSES[canonical]()
+            return scenario_classes[canonical]()
 
     available = sorted({v for v in _SCENARIO_ALIASES.values()})
     raise ValueError(
@@ -113,9 +113,9 @@ def simulate(config: SimulationConfig) -> SimulationResult:
 
 def list_scenarios() -> list[dict[str, str]]:
     """Return metadata for all registered scenarios."""
-    from pathsim.scenarios.startup import StartupScenario
     from pathsim.scenarios.career_change import CareerChangeScenario
     from pathsim.scenarios.investment import InvestmentScenario
+    from pathsim.scenarios.startup import StartupScenario
 
     return [
         {"name": s.name, "display": s.display_name, "description": s.description}
