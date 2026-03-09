@@ -13,8 +13,6 @@ numbers and asks for a plain-text analysis of the key risks.
 
 from __future__ import annotations
 
-import json
-
 from pathsim.models import SimulationResult
 
 _OLLAMA_URL = "http://localhost:11434/api/generate"
