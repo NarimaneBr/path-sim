@@ -1,5 +1,10 @@
 # PathSim
 
+[![CI](https://github.com/NarimaneBr/path-sim/actions/workflows/ci.yml/badge.svg)](https://github.com/NarimaneBr/path-sim/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Coverage](https://img.shields.io/badge/coverage-checked-brightgreen)](#continuous-integration)
+
 A local decision simulation engine. Given a decision — starting a company, switching careers, making an investment — PathSim runs thousands of probabilistic scenarios and reports outcome distributions.
 
 Results are heuristic and exploratory. PathSim does not predict the future.
@@ -269,17 +274,25 @@ pathsim/
 ## Development
 
 ```bash
-# Run tests
+# Run tests (coverage included by default)
 pytest
-
-# Run with coverage
-pytest --cov=pathsim
 
 # Lint
 ruff check pathsim
 ```
 
 To add a new scenario, subclass `BaseScenario` in `pathsim/scenarios/` and register it in `pathsim/engine.py`.
+
+### Continuous integration
+
+Every push and pull request triggers the CI pipeline defined in [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+
+The pipeline runs on Python 3.10, 3.11, and 3.12 and executes two jobs:
+
+- **test** — installs the project in editable mode, runs the full pytest suite with coverage reporting
+- **lint** — runs `ruff check` across the `pathsim` package
+
+Coverage results are uploaded as a build artifact on Python 3.12 runs. The CI badge at the top of this file reflects the current status of the `main` branch.
 
 ---
 

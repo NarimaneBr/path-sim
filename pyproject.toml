@@ -59,7 +59,16 @@ include = ["pathsim*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-v --tb=short"
+addopts = "-v --tb=short --cov=pathsim --cov-report=term-missing --cov-report=xml"
+
+[tool.coverage.run]
+source = ["pathsim"]
+omit = ["pathsim/llm/*", "pathsim/visualization/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+precision = 1
 
 [tool.ruff]
 line-length = 100
