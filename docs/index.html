@@ -229,6 +229,43 @@
     footer a { color: var(--muted); }
     footer a:hover { color: var(--text); }
 
+    .hero .badges {
+      margin-bottom: 2rem;
+      display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
+    }
+    .hero .badges img { height: 20px; }
+
+    /* Methodology Section */
+    .methodology-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .method-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .method-card h3 {
+      font-size: 1rem; margin-bottom: 0.8rem; color: var(--accent);
+    }
+    .method-card p {
+      font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem;
+    }
+    .method-card ul {
+      list-style: none; font-size: 0.85rem; color: var(--muted);
+    }
+    .method-card li { margin-bottom: 0.4rem; padding-left: 1rem; position: relative; }
+    .method-card li::before {
+      content: "→"; position: absolute; left: 0; color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .methodology-grid { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 600px) {
       .nav-links { display: none; }
       .hero { padding: 3rem 1.2rem 2rem; }
@@ -375,16 +412,46 @@ pathsim startup --explain --model mistral
 pathsim --list</pre>
 </section>
 
+<!-- Methodology -->
+<section id="methodology">
+  <h2>The Methodology</h2>
+  <div class="methodology-grid">
+    <div class="method-card">
+      <h3>What is Monte Carlo?</h3>
+      <p>
+        Named after the Monaco casino, Monte Carlo simulation relies on <i>repeated random sampling</i>
+        to obtain numerical results. Instead of guessing a single future, we simulate thousands.
+      </p>
+      <ul>
+        <li>Models uncertain variables instead of point estimates.</li>
+        <li>Generates whole distributions of possible futures.</li>
+        <li>Quantifies risk explicitly (e.g., "9% success").</li>
+      </ul>
+    </div>
+    <div class="method-card">
+      <h3>How PathSim uses it</h3>
+      <p>
+        Across 10,000 runs, PathSim samples each factor from its distribution,
+        combines them in a weighted model, and classifies the outcome.
+      </p>
+      <ul>
+        <li><b>Distributions:</b> Normal, Beta, or Uniform priors.</li>
+        <li><b>Scoring:</b> Linear weighted combination normalized to [0,1].</li>
+        <li><b>Sensitivity:</b> Spearman correlation reveals the primary drivers.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- Design -->
 <section id="design">
-  <h2>Design</h2>
+  <h2>Design & Scoring</h2>
   <p style="color: var(--muted); margin-bottom: 1.5rem;">
-    Each simulation samples independent variables from calibrated probability
-    distributions, combines them through a weighted linear model, and classifies
-    the result. Running thousands of iterations produces a stable outcome distribution.
+    Our models are calibrated by hand but use industry-standard priors.
+    Treat simulation results as intuition-builders, not financial advice.
   </p>
 
-  <h3 style="font-size: 1rem; margin-bottom: 0.8rem;">Scoring model (startup)</h3>
+  <h3 style="font-size: 1rem; margin-bottom: 0.8rem;">Scoring model (startup example)</h3>
   <pre>score =
     0.30 × founder_skill
   + 0.25 × market_size
